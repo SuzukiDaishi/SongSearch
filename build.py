@@ -1,6 +1,7 @@
 import glob
 from mutagen.mp4 import MP4
 import json, os, sys, subprocess
+import librosa
 import numpy as np
 import torch
 from omegaconf import OmegaConf
@@ -50,6 +51,29 @@ for filepath in sorted(glob.glob(f"data/*/*.m4a")):
     WAV_NAME = f"{WAVS_DIR}/{filepath.split('.')[0].split('/')[-1]}.wav"
     MIDI_NAME = f"{MIDIS_DIR}/{filepath.split('.')[0].split('/')[-1]}.midi"
     print(" ".join(["ffmpeg", "-i", f"{filepath}", "-loglevel", "quiet", f"{WAV_NAME}"]))
+    
+    ModeHist = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    bpm = 0
+    if not os.path.isdir(WAVS_DIR):
+        os.mkdir(WAVS_DIR)
+    if not os.path.isdir(MIDIS_DIR):
+        os.mkdir(MIDIS_DIR)
+    if not os.path.isfile(WAV_NAME):
+        subprocess.run(["ffmpeg", "-i", f"{filepath}", "-loglevel", "quiet", f"{WAV_NAME}"])
+        y, sr = librosa.load(WAV_NAME)
+        tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+    if not os.path.isfile(MIDI_NAME) and os.path.isfile(WAV_NAME):
+        composer = "composer3"
+        pm, _, _, _ = wrapper.generate(
+            audio_path=WAV_NAME, 
+            composer=composer, 
+            model=model
+        )
+        pm.write(MIDI_NAME)
+        
+        for i, roll in enumerate(pm.get_piano_roll() > 0):
+            ModeHist[i % 12] += np.sum(roll).item()
+    
     data.append({
         "track_title": track_title,
         "album": album,
@@ -61,26 +85,12 @@ for filepath in sorted(glob.glob(f"data/*/*.m4a")):
         "sample_rate": sample_rate,
         "bits_per_sample": bits_per_sample,
         "codec": codec,
+        "bpm": tempo,
+        "mode_hist": ModeHist,
         "file_path": filepath,
         "wav_path": WAV_NAME,
-        "midi_path": MIDI_NAME
+        "midi_path": MIDI_NAME,
     })
-    
-    if not os.path.isdir(WAVS_DIR):
-        os.mkdir(WAVS_DIR)
-    if not os.path.isdir(MIDIS_DIR):
-        os.mkdir(MIDIS_DIR)
-    if not os.path.isfile(WAV_NAME):
-        subprocess.run(["ffmpeg", "-i", f"{filepath}", "-loglevel", "quiet", f"{WAV_NAME}"])
-    if not os.path.isfile(MIDI_NAME) and os.path.isfile(WAV_NAME):
-        composer = "composer14"
-        pm, _, _, _ = wrapper.generate(
-            audio_path=WAV_NAME, 
-            composer=composer, 
-            model=model
-        )
-        pm.write(MIDI_NAME)
-    
     print()
         
 
