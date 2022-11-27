@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    version="1.1" viewBox="-0.5 -0.5 647 367">
+    <defs>
+        <filter id="dropshadow" x="-2" y="-2" width="200" height="200">
+            <feGaussianBlur  stdDeviation="1"/>
+        </filter>
+        <style type="text/css">
+        .line1 {
+            stroke: #EF454A;
+            stroke-dasharray: 200;
+            animation: dash1 60s linear infinite;
+        }
+        @keyframes dash1 {
+            from {
+                stroke-dashoffset: 3000%;
+            }
+            to {
+                stroke-dashoffset: 0%;
+            }
+        }
+        .line2 {
+            stroke: #EF454A;
+            stroke-dasharray: 200;
+            animation: dash2 60s linear infinite;
+        }
+        @keyframes dash2 {
+            from {
+                stroke-dashoffset: 3200%;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        .line3 {
+            stroke: #EF454A;
+            stroke-dasharray: 200;
+            animation: dash3 60s linear infinite;
+        }
+        @keyframes dash3 {
+            from {
+                stroke-dashoffset: 4400%;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        </style>
+    </defs>
+    <g>
+        <path class="line1" d="M 162 362 L 162 172 L 242 82 L 242 2" fill="none" stroke-width="3.5" stroke-miterlimit="10" pointer-events="stroke" />
+        <path class="line2" d="M 82 362 L 82 282 L 2 202 L 2 2" fill="none" stroke-width="3.5" stroke-miterlimit="10" pointer-events="stroke" />
+        <path class="line3" d="M 122 362 L 122 242 L 82 202 L 82 2" fill="none" stroke-width="3.5" stroke-miterlimit="10" pointer-events="stroke" />
+        <path class="line1" d="M 242 362 L 242 322 L 322 322 L 322 2" fill="none" stroke-width="3.5" stroke-miterlimit="10" pointer-events="stroke" />
+        <path class="line2" d="M 362 362 L 362 242 L 282 162 L 282 2" fill="none" stroke-width="3.5" stroke-miterlimit="10" pointer-events="stroke" />
+        <path class="line3" d="M 402 362 L 402 242 L 482 162 L 482 2" fill="none" stroke-width="3.5" stroke-miterlimit="10" pointer-events="stroke" />
+        <path class="line1" d="M 442 362 L 442 282 L 562 162 L 562 2" fill="none" stroke-width="3.5" stroke-miterlimit="10" pointer-events="stroke" />
+        <path class="line2" d="M 562 362 L 562 322 L 402 122 L 402 2" fill="none" stroke-width="3.5" stroke-miterlimit="10" pointer-events="stroke" />
+        <path class="line3" d="M 602 362 L 602 282 L 642 242 L 642 2" fill="none" stroke-width="3.5" stroke-miterlimit="10" pointer-events="stroke" />
+    </g>
+</svg> 

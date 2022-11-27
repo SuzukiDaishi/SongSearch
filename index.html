@@ -19,8 +19,17 @@
     }
   </script>
     <div id="app">
+      <div 
+        style="background-image: url(web/cyberLine.svg);
+               position: fixed;
+               top: 0;
+               left: 0;
+               width: 100vw;
+               height: 100vh;"
+        class="has-background-grey-darker">
+      </div>
       <header>
-        <nav class="navbar is-transparent is-fixed-top" role="navigation" aria-label="top navigation">
+        <nav class="navbar is-transparent is-fixed-top has-background-grey" role="navigation" aria-label="top navigation">
           <div class="navbar-brand">
             <a class="navbar-item" href="https://johobase.com">
               <img class="image" src="web/logo.png">
@@ -37,7 +46,7 @@
         </nav>
       </header>
       <div class="container">
-        <div v-for="track in tracks" :key="track.id" class="box mt-5 mb-5"> 
+        <div v-for="track in tracks" :key="track.id" class="box mt-5 mb-5 pb-6" style="background-color: rgba(200, 200, 200, 0.8);"> 
           <div class="field">
             <h3 class="title is-5">[{{ track.album }}] {{ track.track_title }}</h3>
             <audio :src="track.file_path" controls></audio><br>
