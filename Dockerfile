@@ -9,4 +9,4 @@ RUN pip install pretty-midi==0.2.9 omegaconf==2.1.1 youtube-dl==2021.12.17 trans
 RUN pip install mutagen
 
 # docker build ./ -t pytorch_demo
-# sudo docker run -it -v $(pwd):/workspace pytorch_demo:latest python main.py
+# sudo docker run -it -v $(pwd):/workspace pytorch_demo:latest python build.py

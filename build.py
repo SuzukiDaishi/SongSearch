@@ -9,6 +9,8 @@ from omegaconf import OmegaConf
 sys.path.append("pop2piano")
 from transformer_wrapper import TransformerWrapper
 
+id = 0
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 config = OmegaConf.load("pop2piano/config.yaml")
 wrapper = TransformerWrapper(config)
@@ -75,6 +77,7 @@ for filepath in sorted(glob.glob(f"data/*/*.m4a")):
             ModeHist[i % 12] += np.sum(roll).item()
     
     data.append({
+        "id": id,
         "track_title": track_title,
         "album": album,
         "artist": artist,
@@ -91,6 +94,7 @@ for filepath in sorted(glob.glob(f"data/*/*.m4a")):
         "wav_path": WAV_NAME,
         "midi_path": MIDI_NAME,
     })
+    id += 1
     print()
         
 

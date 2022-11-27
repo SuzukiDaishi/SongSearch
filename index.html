@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja" class="has-navbar-fixed-top">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link media="all" rel="stylesheet" type="text/css" href="web/cssplot.full.css" />
+  <title>SongSearch</title>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+      }
+    }
+  </script>
+    <div id="app">
+      <header>
+        <nav class="navbar is-transparent is-fixed-top" role="navigation" aria-label="top navigation">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="https://johobase.com">
+              <img class="image" src="web/logo.png">
+            </a>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item select is-hoverable mt-2">
+              <select @change="sortHist">
+                <option hidden>類似楽曲検索</option>
+                <option v-for="track in tracksSelect" :key="track.id" :value="track.id">{{track.album}} - {{track.track_title}}</option>
+              </select>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="container">
+        <div v-for="track in tracks" :key="track.id" class="box mt-5 mb-5"> 
+          <div class="field">
+            <h3 class="title is-5">[{{ track.album }}] {{ track.track_title }}</h3>
+            <audio :src="track.file_path" controls></audio><br>
+            <p>
+              <span><strong>アーティスト:</strong> {{track.artist}}</span><br>
+              <span><strong>ビットレート:</strong> {{track.bitrate}}</span><br>
+              <span><strong>長さ:</strong> {{track.length}}秒</span><br>
+              <span><strong>チャンネル数:</strong> {{track.channels}}</span><br>
+              <span><strong>サンプルレート:</strong> {{track.sample_rate}}</span><br>
+              <span><strong>ビットパーセコンド:</strong> {{track.bits_per_sample}}</span><br>
+              <span><strong>コーデック:</strong> {{track.codec}}</span><br>
+              <span><strong>推定BPM:</strong> {{track.bpm}}</span><br>
+              <span v-if="searchId != null"><strong>推定モード分布距離:</strong> {{modeSlideDistance(tracksSelect[searchId].mode_hist, track.mode_hist)}}</span>
+            </p>
+            <h6 class="subtitle mt-5">出現頻度</h6>
+            <div class="column-chart">
+              <ul class="plot-container">
+                  <li v-for="i in 12" :key="i" :data-cp-size="track.mode_hist.map(v=>parseInt(v/Math.max(...track.mode_hist)*100))[i-1]">{{chords[i-1]}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script type="module" src="web/main.mjs"></script> 
+</body>
+</html>
